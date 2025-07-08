@@ -1,6 +1,6 @@
 # REST API -käyttäjärekisteri (TypeScript, Express, MongoDB)
 
-Tämä projekti on opettavainen backend-sovellus, joka demonstroi käyttäjien rekisteröintiä, salasanan salausta, validointia ja MongoDB Atlas -integraatiota TypeScriptillä, Expressillä ja Mongoose-kirjastolla.
+Tämä projekti on backend-sovellus, joka demonstroi käyttäjien rekisteröintiä, salasanan salausta, validointia ja MongoDB Atlas -integraatiota TypeScriptillä, Expressillä ja Mongoose-kirjastolla.
 
 ## 🔧 Teknologiat
 
@@ -70,7 +70,7 @@ SALT_WORK_FACTOR=10
 
 ---
 
-## 🧪 Terveyden tarkastus
+## palvelimen toiminnan tarkastus
 
 ### GET `/healthcheck`
 Tarkistaa, että palvelin on käynnissä.
