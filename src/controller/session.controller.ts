@@ -5,28 +5,36 @@ import { createSession } from "../service/session.service";
 import { signJwt } from "../utils/jwt.utils";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
-  // Validate the user's password
+  // Tarkistetaan käyttäjän tunnukset
   const user = await validatePassword(req.body);
 
   if (!user) {
-    return res.status(401).send("Invalid email or password");
+    return res.status(401).send("Virheellinen sähköposti tai salasana");
   }
 
   if (!("_id" in user)) {
-    return res.status(500).send("User object missing _id");
+    return res.status(500).send("Käyttäjältä puuttuu _id");
   }
-  // create a session
+
+  // Luodaan istunto (session)
   const session = await createSession(
     user._id as string,
     req.get("user-agent") || ""
   );
-  // create an access token
 
+  // Luodaan access token
   const accessToken = signJwt(
-    { ...user, session: (await session)._id },
+    { ...user, session: session._id },
     { expiresIn: config.get("accessTokenTtl") } // 15 minutes
   );
 
-  // create a refresh token
+  // Luodaan refresh token
+  const refreshToken = signJwt(
+    { ...user, session: session._id },
+    { expiresIn: config.get("accessTokenTtl") } // 15 minutes
+  );
+
   // return access & refresh tokens
+
+  return res.send({ accessToken, refreshToken });
 }
