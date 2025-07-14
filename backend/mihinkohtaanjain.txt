@@ -1,2 +1,2 @@
 Testing Express REST API With Jest & Supertest:
-18:34 / 55:42
+30:00 / 55:42
