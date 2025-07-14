@@ -6,11 +6,12 @@ const tsJestTransformCfg = createDefaultPreset().transform;
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
+  setupFiles: ["dotenv/config"],
   transform: {
     ...tsJestTransformCfg,
   },
   testMatch: ["**/**/*.test.ts"],
   verbose: true,
   forceExit: true,
-  // clearMocks: true,
+  clearMocks: true,
 };
