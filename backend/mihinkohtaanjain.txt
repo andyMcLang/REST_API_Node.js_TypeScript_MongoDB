@@ -1,2 +1,0 @@
-Testing Express REST API With Jest & Supertest:
-30:00 / 55:42
