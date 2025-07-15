@@ -17,7 +17,7 @@ const deserializeUser = async (
     (get(req, "headers.x-refresh") as string);
 
   if (!accessToken) {
-    return next(); // Ei access tokenia, käyttäjää ei voi tunnistaa
+    return next(); // Ei tokenia
   }
 
   const { decoded, expired } = verifyJwt(accessToken);
@@ -33,19 +33,27 @@ const deserializeUser = async (
     if (newAccessToken) {
       res.setHeader("x-access-token", newAccessToken);
 
-      res.cookie("accessToken", accessToken, {
-        maxAge: 900000, // 15 mins
+      // 🔧 Tämä oli virheellinen:
+      // res.cookie("accessToken", accessToken, { ... });
+
+      // ✅ Tämä on oikea:
+      res.cookie("accessToken", newAccessToken, {
+        maxAge: 900000, // 15 min
         httpOnly: true,
         domain: "localhost",
         path: "/",
         sameSite: "strict",
         secure: false,
       });
+
+      const result = verifyJwt(newAccessToken);
+      if (result.decoded) {
+        res.locals.user = result.decoded;
+      }
     }
   }
 
-  return next(); // Access token ei kelpaa, eikä uutta saatu
-  // -> käyttäjää ei ole
+  return next();
 };
 
 export default deserializeUser;

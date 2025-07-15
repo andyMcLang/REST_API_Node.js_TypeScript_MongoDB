@@ -10,7 +10,7 @@ export async function createUserHandler(
 ) {
   try {
     const user = await createUser(req.body); // kutsutaan createUser-funktiota käyttäjän luomiseksi
-    return res.status(user);
+    return res.status(201).send(user);
   } catch (e: any) {
     logger.error(e);
     return res.status(409).send(e.message);
@@ -18,5 +18,11 @@ export async function createUserHandler(
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
-  return res.send(res.locals.user);
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.status(401).send("Ei kirjautunut käyttäjä");
+  }
+
+  return res.send(user);
 }

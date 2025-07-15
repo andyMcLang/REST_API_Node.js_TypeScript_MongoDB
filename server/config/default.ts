@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
 export default {
   port: Number(process.env.PORT) || 1337,
   origin: "http://localhost:3000",

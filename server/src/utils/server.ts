@@ -9,8 +9,8 @@ function createServer() {
 
   app.use(
     cors({
-      origin: config.get("origin"),
-      credentials: true,
+      origin: "http://localhost:3000", // tärkeä: ei saa olla "*"
+      credentials: true, // sallii evästeet
     })
   );
 
