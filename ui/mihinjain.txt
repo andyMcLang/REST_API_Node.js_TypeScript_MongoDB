@@ -1,2 +1,2 @@
 Build a Login and Registration User Interface in React.js With JWTs and Refresh Tokens
-13:49 / 49:14
+27:21 / 49:14

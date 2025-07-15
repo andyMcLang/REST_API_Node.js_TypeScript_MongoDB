@@ -10,11 +10,15 @@ export async function createUserHandler(
 ) {
   try {
     const user = await createUser(req.body); // kutsutaan createUser-funktiota käyttäjän luomiseksi
-    const safeUser = omit(user.toJSON(), "password");
-
-    return res.status(201).json(safeUser);
+    return res.status(201).send(user);
   } catch (e: any) {
-    logger.error(e);
-    return res.status(409).send(e.message);
+    if (e.code === 11000) {
+      return res.status(409).send({
+        message: "Sähköposti on jo käytössä.",
+      });
+    }
+    return res.status(500).send({
+      message: "Jokin meni pieleen",
+    });
   }
 }
